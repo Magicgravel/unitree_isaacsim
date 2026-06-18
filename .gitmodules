@@ -1,0 +1,3 @@
+[submodule "unitree_sim_isaaclab"]
+	path = unitree_sim_isaaclab
+	url = https://github.com/unitreerobotics/unitree_sim_isaaclab
