@@ -162,25 +162,24 @@ import pinocchio  # required by Isaac Sim (side-effect import, do not remove)
 app_launcher = AppLauncher(args_cli)
 simulation_app = app_launcher.app
 
-from layeredcontrol.robot_control_system import (
+from unitree_sim_isaaclab.layeredcontrol.robot_control_system import (
     RobotController,
     ControlConfig,
 )
 
-from dds.reset_pose_dds import *
-import tasks
+from unitree_sim_isaaclab.dds.reset_pose_dds import *
 from isaaclab_tasks.utils.parse_cfg import parse_env_cfg
 
-from tools.augmentation_utils import (
+from unitree_sim_isaaclab.tools.augmentation_utils import (
     update_light,
     batch_augment_cameras_by_name,
 )
 
-from tools.data_json_load import sim_state_to_json
-from dds.sim_state_dds import *
-from action_provider.create_action_provider import create_action_provider
-from tools.get_stiffness import get_robot_stiffness_from_env
-from tools.get_reward import get_step_reward_value
+from unitree_sim_isaaclab.tools.data_json_load import sim_state_to_json
+from unitree_sim_isaaclab.dds.sim_state_dds import *
+from unitree_sim_isaaclab.action_provider.create_action_provider import create_action_provider
+from unitree_sim_isaaclab.tools.get_stiffness import get_robot_stiffness_from_env
+from unitree_sim_isaaclab.tools.get_reward import get_step_reward_value
 
 # ---- Signal handling --------------------------------------------------------
 
@@ -238,7 +237,7 @@ def _configure_sim_params(env, args_cli) -> None:
     # camera write interval
     if args_cli.camera_write_interval is not None:
         try:
-            import tasks.common_observations.camera_state as cam_state
+            import unitree_sim_isaaclab.tasks.common_observations.camera_state as cam_state
             cam_state._camera_cache['write_interval_steps'] = max(1, int(args_cli.camera_write_interval))
             print(f"[camera] write interval={cam_state._camera_cache['write_interval_steps']} steps")
         except Exception as e:
@@ -271,7 +270,7 @@ def _configure_camera_params(env, args_cli) -> None:
         os.environ["CAMERA_SKIP_CVTCOLOR"] = "1"
 
     try:
-        import tasks.common_observations.camera_state as cam_state
+        import unitree_sim_isaaclab.tasks.common_observations.camera_state as cam_state
 
         enable_jpeg = bool(args_cli.camera_jpeg) or (os.getenv("CAMERA_JPEG") == "1")
         quality = int(args_cli.camera_jpeg_quality if args_cli.camera_jpeg
@@ -336,7 +335,7 @@ def _setup_replay_dds_and_data(args_cli, env):
     create_dds_objects_replay(args_cli, env)
 
     log_section("get data json list")
-    from tools.data_json_load import get_data_json_list
+    from unitree_sim_isaaclab.tools.data_json_load import get_data_json_list
     data_json_list = get_data_json_list(args_cli.file_path)
     if args_cli.action_source != "replay":
         args_cli.action_source = "replay"
