@@ -3,3 +3,5 @@
 .vscode
 .venv
 venv
+assets
+unitree_sim_isaaclab/assets
