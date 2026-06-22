@@ -25,7 +25,7 @@ from pathlib import Path
 from isaaclab.app import AppLauncher
 
 from teleimager.image_server import run_isaacsim_server
-from dds.dds_create import create_dds_objects, create_dds_objects_replay
+from unitree_sim_isaaclab.dds.dds_create import create_dds_objects, create_dds_objects_replay
 
 # ---- Helper utilities -------------------------------------------------------
 
