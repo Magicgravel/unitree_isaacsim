@@ -4,13 +4,19 @@
 #!/usr/bin/env python3
 # main.py
 import os
+import sys
+from pathlib import Path
 
 project_root = os.path.dirname(os.path.abspath(__file__))
 os.environ["PROJECT_ROOT"] = project_root
 
+UNITREE_SIM_ISAACLAB_ROOT = Path('./unitree_sim_isaaclab').expanduser().resolve()
+if str(UNITREE_SIM_ISAACLAB_ROOT) not in sys.path:
+    sys.path.insert(0, str(UNITREE_SIM_ISAACLAB_ROOT))
+    print(f"[main] Added to sys.path: {UNITREE_SIM_ISAACLAB_ROOT}")
+
 import argparse
 import time
-import sys
 import signal
 import threading
 import atexit
@@ -19,7 +25,6 @@ from typing import Optional
 
 import torch
 import gymnasium as gym
-from pathlib import Path
 
 # Isaac Lab AppLauncher
 from isaaclab.app import AppLauncher
@@ -168,6 +173,7 @@ from unitree_sim_isaaclab.layeredcontrol.robot_control_system import (
 )
 
 from unitree_sim_isaaclab.dds.reset_pose_dds import *
+import tasks  # triggers gym.register() for all custom Unitree tasks
 from isaaclab_tasks.utils.parse_cfg import parse_env_cfg
 
 from unitree_sim_isaaclab.tools.augmentation_utils import (
